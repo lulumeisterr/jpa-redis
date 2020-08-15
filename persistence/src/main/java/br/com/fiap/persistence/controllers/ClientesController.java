@@ -22,7 +22,7 @@ public class ClientesController {
     @Autowired
     ClienteService clienteService;
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<ClientePresenter>> getAll(){
         return ResponseEntity.ok(clienteService.findAll().stream().map(ClientePresenter::new).collect(toList()));
     }

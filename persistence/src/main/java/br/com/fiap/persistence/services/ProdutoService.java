@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import br.com.fiap.persistence.models.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -38,7 +37,7 @@ public class ProdutoService {
     }
 
     @Transactional
-    @CacheEvict(value= "allPedidos", allEntries= true)
+    @CacheEvict(value= "allProdutos", allEntries= true)
     public void addAll(Collection<Produto> produtos) {
         for (Produto produto : produtos) {
             produtoRepository.save(produto);
@@ -56,6 +55,14 @@ public class ProdutoService {
     @CacheEvict(value= "produto", allEntries= true)
     public void deleteAll(){
         produtoRepository.deleteAll();
+    }
+    
+    @Caching(evict= {
+            @CacheEvict(value= "produto", key= "#codigo"),
+            @CacheEvict(value= "allProdutos", allEntries= true)
+        })
+    public void deleteById(Long codigo) {
+    	produtoRepository.deleteById(codigo);
     }
 
     @Cacheable(value= "produto", key = "#codigo")
