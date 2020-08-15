@@ -13,7 +13,7 @@
  
  # Importante para devs do grupo
  
- - Remover a implementacao CommandLineRunner no metodo main 
+ - Remover a implementacao CommandLineRunner no metodo main apos construir as controllers
  - Criar um schema com o nome "persistence" no banco local
  - Alterar usuario e senha no application.properties
  
