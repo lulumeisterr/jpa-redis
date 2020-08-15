@@ -51,7 +51,7 @@ public class RedisConfig implements WebMvcConfigurer {
                 .cacheDefaults(RedisCacheConfiguration
                         .defaultCacheConfig()
                         .prefixCacheNameWith("fi.app-")
-                        .entryTtl(Duration.ofMinutes(10))
+                        .entryTtl(Duration.ofMinutes(10)))
                 .build();
         rcm.setTransactionAware(true);
         return rcm;
