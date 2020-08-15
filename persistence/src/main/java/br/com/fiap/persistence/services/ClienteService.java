@@ -1,7 +1,6 @@
 package br.com.fiap.persistence.services;
 
 import br.com.fiap.persistence.models.Cliente;
-import br.com.fiap.persistence.models.Produto;
 import br.com.fiap.persistence.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -56,5 +55,4 @@ public class ClienteService {
     public Optional<Cliente> findById(Long codigo){
         return clienteRepository.findById(codigo);
     }
-
 }

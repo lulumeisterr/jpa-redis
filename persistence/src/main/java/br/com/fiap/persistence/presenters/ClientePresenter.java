@@ -1,15 +1,18 @@
 package br.com.fiap.persistence.presenters;
 
 import br.com.fiap.persistence.models.Cliente;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@Getter
+@NoArgsConstructor
 public class ClientePresenter implements Serializable {
     private Long id;
     private String nome;
     private EnderecoPresenter endereco;
 
-    public ClientePresenter(){}
 
     public ClientePresenter(Cliente cliente) {
         this.id = cliente.getCodigo();
@@ -17,16 +20,5 @@ public class ClientePresenter implements Serializable {
         this.endereco = new EnderecoPresenter(cliente.getEndereco());
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public EnderecoPresenter getEndereco() {
-        return endereco;
-    }
 
 }

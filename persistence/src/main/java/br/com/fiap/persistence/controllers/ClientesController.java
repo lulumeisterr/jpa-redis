@@ -16,7 +16,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping(value = "clientes")
+@RequestMapping(value = "/clientes")
 public class ClientesController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class ClientesController {
         return ResponseEntity.ok(clienteService.findAll().stream().map(ClientePresenter::new).collect(toList()));
     }
 
-    @GetMapping("{codigo}")
+    @GetMapping("/{codigo}")
     public ResponseEntity<ClientePresenter> getbyId(@PathVariable Long codigo){
         Optional<Cliente> cliente = clienteService.findById(codigo);
         if(cliente.isPresent())
