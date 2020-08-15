@@ -1,5 +1,6 @@
 package br.com.fiap.persistence.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_PRODUTO_ESTOQUE")
 @SequenceGenerator(name = "produtoEstoque", sequenceName = "T_PRODUTO_ESTOQUE", allocationSize = 1)
-public class ProdutoEstoque {
+public class ProdutoEstoque implements Serializable {
 
 	@Id
 	@GeneratedValue(generator = "produtoEstoque", strategy = GenerationType.AUTO)

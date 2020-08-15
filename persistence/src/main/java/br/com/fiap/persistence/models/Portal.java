@@ -1,5 +1,6 @@
 package br.com.fiap.persistence.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_PORTAL")
 @SequenceGenerator(name = "portal", sequenceName = "T_PORTAL", allocationSize = 1)
-public class Portal {
+public class Portal implements Serializable {
 
 
 	@Id

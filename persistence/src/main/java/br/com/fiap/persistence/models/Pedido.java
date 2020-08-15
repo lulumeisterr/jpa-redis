@@ -1,6 +1,7 @@
 package br.com.fiap.persistence.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "T_PEDIDO")
 @SequenceGenerator(name = "pedido", sequenceName = "SQ_T_PEDIDO", allocationSize = 1)
-public class Pedido {
+public class Pedido implements Serializable {
 
 	@Id
 	@GeneratedValue(generator = "pedido", strategy = GenerationType.IDENTITY)

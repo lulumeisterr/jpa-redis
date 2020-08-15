@@ -2,6 +2,7 @@ package br.com.fiap.persistence.models;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 /**
  * 
@@ -13,7 +14,7 @@ import javax.persistence.Embeddable;
 
 
 @Embeddable
-public class Endereco {
+public class Endereco implements Serializable {
 
 	@Column(name = "nm_logradouro", nullable = false)
 	private String logradouro;
