@@ -4,6 +4,7 @@ import br.com.fiap.persistence.models.Cliente;
 import br.com.fiap.persistence.models.Endereco;
 import br.com.fiap.persistence.models.Pedido;
 import br.com.fiap.persistence.models.Produto;
+import br.com.fiap.persistence.presenters.PedidoPresenter;
 import br.com.fiap.persistence.services.ClienteService;
 import br.com.fiap.persistence.services.PedidoService;
 import br.com.fiap.persistence.services.ProdutoService;
@@ -46,8 +47,9 @@ public class CmdRunner implements CommandLineRunner {
         Pedido p = new Pedido("Pedido 1000", LocalDateTime.of(2020, Month.FEBRUARY, 20, 11, 30, 51),
                 prodList,
                 c);
+        PedidoPresenter p1 = new PedidoPresenter(p);
 
-        pedidoService.add(p);
+        pedidoService.add(p1);
 
         clienteService.addAll(Arrays.asList(new Cliente("Gabriel", new Endereco("Rua Z", "3030"))));
         clienteService.findById(2l).ifPresent(a->System.out.println(a));
