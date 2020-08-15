@@ -9,6 +9,7 @@ import br.com.fiap.persistence.models.Cliente;
 import br.com.fiap.persistence.repository.ClienteRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ClienteService {
@@ -28,4 +29,6 @@ public class ClienteService {
     public void deleteAll(){
         clienteRepository.deleteAll();
     }
-}
+    public Optional<Cliente> findById(Long clienteId){
+        return clienteRepository.findById(clienteId);
+    }
