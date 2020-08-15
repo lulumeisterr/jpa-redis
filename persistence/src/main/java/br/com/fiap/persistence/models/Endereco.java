@@ -1,4 +1,4 @@
-package br.com.fiap.persistence.bean;
+package br.com.fiap.persistence.models;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
