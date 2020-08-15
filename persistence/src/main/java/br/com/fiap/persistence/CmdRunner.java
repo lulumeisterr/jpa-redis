@@ -36,12 +36,6 @@ public class CmdRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        clienteService.deleteAll();
-
-        Cliente gab= clienteService.add(new Cliente("Gabriel", new Endereco("Rua Z", "3030")));
-
-        clienteService.findById(gab.getCodigo());
-
         List<Produto> prodList = new ArrayList<Produto>();
 
         Cliente c = new Cliente("Lucas", new Endereco("Rua X", "230"));
@@ -55,6 +49,12 @@ public class CmdRunner implements CommandLineRunner {
                 c);
 
         pedidoService.add(p);
+
+        Cliente gab= clienteService.add(new Cliente("Gabriel", new Endereco("Rua Z", "3030")));
+        clienteService.findById(gab.getCodigo()).ifPresent(a->System.out.println(a));
+        clienteService.findById(gab.getCodigo()).ifPresent(a->System.out.println(a));
+        clienteService.findByIdCached(gab.getCodigo()).ifPresent(a->System.out.println(a));
+        clienteService.findByIdCached(gab.getCodigo()).ifPresent(a->System.out.println(a));
 
     }
 
