@@ -24,7 +24,8 @@ Para iniciar o projeto usando maven rode o seguinte comando depois de subir banc
         $ mvn spring-boot:run
 
 
-http://localhost:8080/swagger-ui.html
+Swagger -> http://localhost:8080/swagger-ui.html
+adminer -> http://localhost:8081/
 
  
 # Regras

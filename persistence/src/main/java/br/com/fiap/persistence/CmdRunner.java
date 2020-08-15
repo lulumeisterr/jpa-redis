@@ -16,8 +16,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -36,10 +35,6 @@ public class CmdRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        clienteService.deleteAll();
-
-        clienteService.add(new Cliente("Gabriel", new Endereco("Rua Z", "3030")));
-
         List<Produto> prodList = new ArrayList<Produto>();
 
         Cliente c = new Cliente("Lucas", new Endereco("Rua X", "230"));
@@ -53,6 +48,10 @@ public class CmdRunner implements CommandLineRunner {
                 c);
 
         pedidoService.add(p);
+
+        clienteService.addAll(Arrays.asList(new Cliente("Gabriel", new Endereco("Rua Z", "3030"))));
+        clienteService.findById(2l).ifPresent(a->System.out.println(a));
+        clienteService.findById(2l).ifPresent(a->System.out.println(a));
 
     }
 

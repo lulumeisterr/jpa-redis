@@ -43,8 +43,15 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.endereco = endereco;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Cliente{" +
+				"codigo=" + codigo +
+				", nome='" + nome + '\'' +
+				'}';
+	}
+
 	public Cliente(String nome, Endereco endereco, List<Pedido> pedido) {
 		super();
 		this.nome = nome;
