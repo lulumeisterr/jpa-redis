@@ -12,7 +12,7 @@ import br.com.fiap.persistence.models.Produto;
 import br.com.fiap.persistence.services.ProdutoService;
 
 @RestController
-@RequestMapping("produtos")
+@RequestMapping("/produtos")
 public class ProdutoController {
 	
 	@Autowired
