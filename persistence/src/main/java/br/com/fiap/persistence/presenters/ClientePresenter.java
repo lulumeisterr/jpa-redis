@@ -1,8 +1,6 @@
 package br.com.fiap.persistence.presenters;
 
 import br.com.fiap.persistence.models.Cliente;
-import br.com.fiap.persistence.models.Endereco;
-import br.com.fiap.persistence.presenters.EnderecoPresenter;
 
 import java.io.Serializable;
 
@@ -14,7 +12,7 @@ public class ClientePresenter implements Serializable {
     public ClientePresenter(){}
 
     public ClientePresenter(Cliente cliente) {
-        this.id = cliente.getCliente();
+        this.id = cliente.getCodigo();
         this.nome = cliente.getNome();
         this.endereco = new EnderecoPresenter(cliente.getEndereco());
     }
