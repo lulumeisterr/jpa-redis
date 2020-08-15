@@ -1,1 +1,6 @@
-/.metadata/
+/.metadata
+RemoteSystemsTempFiles
+.DS_Store
+.idea/
+target/
+*.iml
