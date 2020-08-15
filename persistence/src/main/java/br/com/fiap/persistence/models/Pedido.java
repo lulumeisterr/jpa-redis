@@ -40,14 +40,14 @@ public class Pedido {
 	 * E varios pedidos pode pertencer a um ou mais cliente
 	 */
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	private Cliente pedidoCliente;
 
 	public Pedido() {
 
 	}
-	
+
 	public Pedido(String descricao, LocalDateTime data, List<Produto> produtos, Cliente pedidoCliente) {
 		super();
 
