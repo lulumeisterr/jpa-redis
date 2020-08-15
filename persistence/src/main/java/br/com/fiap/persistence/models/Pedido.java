@@ -1,21 +1,8 @@
-package br.com.fiap.persistence.bean;
+package br.com.fiap.persistence.models;
 
-import java.util.Calendar;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * Cada pedido possuis um ou mais produtos
@@ -33,13 +20,11 @@ public class Pedido {
 	@Column(name = "cd_pedido")
 	private Long codigo;
 
-
 	@Column(name = "ds_pedido", nullable = false, length = 255)
 	private String descricao;
 
 	@Column(name = "dt_pedido", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar data;
+	private LocalDateTime data;
 
 	/**
 	 * mappedBy, você torna o relacionamento bidiricional, 
@@ -48,7 +33,7 @@ public class Pedido {
 	 * orphanRemoval -> Se voce deletar um Pedido ele vai deletar os produtos
 	 * Cascade -> Vai realizar a acao para todo o relacionamento
 	 */
-	@OneToMany(mappedBy = "pedido",targetEntity = Produto.class, orphanRemoval = true , cascade = javax.persistence.CascadeType.ALL)
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY, targetEntity = Produto.class, orphanRemoval = false, cascade = CascadeType.REFRESH)
 	private List<Produto> produtos;
 
 	/**
@@ -62,7 +47,8 @@ public class Pedido {
 	public Pedido() {
 
 	}
-	public Pedido(String descricao, Calendar data, List<Produto> produtos, Cliente pedidoCliente) {
+	
+	public Pedido(String descricao, LocalDateTime data, List<Produto> produtos, Cliente pedidoCliente) {
 		super();
 
 		this.descricao = descricao;
@@ -82,10 +68,10 @@ public class Pedido {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public Calendar getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
-	public void setData(Calendar data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 	public List<Produto> getProdutos() {

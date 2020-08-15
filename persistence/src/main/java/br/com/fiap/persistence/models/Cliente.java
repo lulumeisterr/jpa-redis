@@ -1,17 +1,9 @@
-package br.com.fiap.persistence.bean;
+package br.com.fiap.persistence.models;
 
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @Embedded é utilizada para marcar campos ou métodos getter nas entidades que
@@ -42,7 +34,7 @@ public class Cliente implements Serializable {
 	/**
 	 * Um cliente esta associado um ou varios pedidos
 	 */
-	@OneToMany(mappedBy = "pedidoCliente")
+	@OneToMany(mappedBy = "pedidoCliente", fetch = FetchType.LAZY)
 	private List<Pedido> pedido;
 
 	public Cliente(String nome, Endereco endereco) {

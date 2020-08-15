@@ -1,4 +1,4 @@
-package br.com.fiap.persistence.bean;
+package br.com.fiap.persistence.models;
 
 import java.util.ArrayList;
 import java.util.List;

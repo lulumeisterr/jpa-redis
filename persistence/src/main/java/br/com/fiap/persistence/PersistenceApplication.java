@@ -1,67 +1,47 @@
 package br.com.fiap.persistence;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import br.com.fiap.persistence.bean.Cliente;
-import br.com.fiap.persistence.bean.Endereco;
-import br.com.fiap.persistence.bean.Pedido;
-import br.com.fiap.persistence.bean.Produto;
-import br.com.fiap.persistence.service.ClienteService;
-import br.com.fiap.persistence.service.PedidoService;
-import br.com.fiap.persistence.service.ProdutoService;
-
+import java.util.*;
 
 @SpringBootApplication()
 @EnableJpaRepositories("br.com.fiap")
 @ComponentScan("br.com.fiap")
-public class PersistenceApplication implements CommandLineRunner{
+@EnableCreateCacheAnnotation
+@EnableSwagger2
+public class PersistenceApplication  {
 
-	@Autowired
-	private ProdutoService produtoService;
+    public static void main(String[] args) {
+        SpringApplication.run(PersistenceApplication.class, args);
+    }
 
-	@Autowired
-	private PedidoService pedidoService;
-
-	@Autowired
-	private ClienteService clienteService;
-
-	private static final Logger log = LoggerFactory.getLogger(PersistenceApplication.class);
-
-	public static void main(String[] args) {
-		SpringApplication.run(PersistenceApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-
-		
-		List<Produto> prodList = new ArrayList<Produto>();
-		
-		
-		Cliente c = new Cliente("Lucas", new Endereco("Rua X", "230"));
-		Produto prod = new Produto("Moudr", 1, 200.0);
-		Produto prod2 = new Produto("DSA", 1, 200.0);
-		prodList.add(prod);
-		prodList.add(prod2);
-		
-		Pedido p = new Pedido("Pedido 1000", new GregorianCalendar(2020 , Calendar.FEBRUARY , 20), 
-				prodList, 
-				c);
-		
-		pedidoService.add(p);
-		
-	}
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(new ApiInfo(
+                        "Model Cache Persistence API",
+                        "Mysql Data using cache Redis.",
+                        "1.0",
+                        "Terms of service",
+                        new Contact("GLA", "www.fiap.com.br", ""),
+                        "License of API", "API license URL", Collections.emptyList())
+                );
+    }
 
 }
