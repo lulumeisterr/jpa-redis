@@ -1,21 +1,17 @@
 package br.com.fiap.persistence.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @Embedded é utilizada para marcar campos ou métodos getter nas entidades que
@@ -28,15 +24,12 @@ import lombok.Setter;
 @Entity
 @Table(name = "T_CLIENTE")
 @SequenceGenerator(name = "cliente", allocationSize = 1, sequenceName = "SQ_T_CLIENTE")
-@Getter
-@Setter
-@AllArgsConstructor
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = -9041949238978234030L;
 
 	@Id
-	@GeneratedValue(generator = "cliente", strategy = GenerationType.AUTO)
+	@GeneratedValue(generator = "cliente", strategy = GenerationType.IDENTITY)
 	@Column(name = "cd_cliente")
 	private Integer cliente;
 
@@ -46,8 +39,11 @@ public class Cliente implements Serializable {
 	@Embedded
 	private Endereco endereco;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Pedido clientePedido;
+	/**
+	 * Um cliente esta associado um ou varios pedidos
+	 */
+	@OneToMany(mappedBy = "pedidoCliente")
+	private List<Pedido> pedido;
 
 	public Cliente(String nome, Endereco endereco) {
 		super();
@@ -56,17 +52,57 @@ public class Cliente implements Serializable {
 		this.endereco = endereco;
 	}
 	
-
-	public Cliente(String nome, Endereco endereco, Pedido pedido) {
+	
+	public Cliente(String nome, Endereco endereco, List<Pedido> pedido) {
 		super();
-		
 		this.nome = nome;
 		this.endereco = endereco;
-		this.clientePedido = pedido;
+		this.pedido = pedido;
 	}
-
 
 	public Cliente() {
 
 	}
+
+
+	public Integer getCliente() {
+		return cliente;
+	}
+
+
+	public void setCliente(Integer cliente) {
+		this.cliente = cliente;
+	}
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+
+	public List<Pedido> getPedido() {
+		return pedido;
+	}
+
+
+	public void setPedido(List<Pedido> pedido) {
+		this.pedido = pedido;
+	}
+	
+	
 }

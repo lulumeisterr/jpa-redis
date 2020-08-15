@@ -10,9 +10,7 @@ import br.com.fiap.persistence.repository.ClienteRepository;
 
 @Component
 public class ClienteService {
-
 	
-
     @Autowired
     private ClienteRepository clienteRepository;
 

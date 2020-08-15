@@ -14,16 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 @Entity
 @Table(name = "T_PRODUTO_ESTOQUE")
 @SequenceGenerator(name = "produtoEstoque", sequenceName = "T_PRODUTO_ESTOQUE", allocationSize = 1)
-@Getter
-@Setter
-@AllArgsConstructor
 public class ProdutoEstoque {
 
 	@Id

@@ -1,27 +1,24 @@
 package br.com.fiap.persistence.bean;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
- * Cada pedido possui um ou mais produtos
+ * Cada pedido possuis um ou mais produtos
  * 
  * @author lucasrodriguesdonascimento
  *
@@ -29,13 +26,13 @@ import lombok.Setter;
 @Entity
 @Table(name = "T_PEDIDO")
 @SequenceGenerator(name = "pedido", sequenceName = "SQ_T_PEDIDO", allocationSize = 1)
-@Getter @Setter @AllArgsConstructor
 public class Pedido {
 
 	@Id
-	@GeneratedValue(generator = "pedido", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "pedido", strategy = GenerationType.IDENTITY)
 	@Column(name = "cd_pedido")
-	private int codigo;
+	private Long codigo;
+
 
 	@Column(name = "ds_pedido", nullable = false, length = 255)
 	private String descricao;
@@ -45,39 +42,65 @@ public class Pedido {
 	private Calendar data;
 
 	/**
-	 * MappedBy para enxergar o atributo da classe Produto Lista de Produto esta
-	 * mapeado para Produto
+	 * mappedBy, você torna o relacionamento bidiricional, 
+	 * onde os dois lados do relacionaomento se convesam
 	 * 
 	 * orphanRemoval -> Se voce deletar um Pedido ele vai deletar os produtos
 	 * Cascade -> Vai realizar a acao para todo o relacionamento
 	 */
 	@OneToMany(mappedBy = "pedido",targetEntity = Produto.class, orphanRemoval = true , cascade = javax.persistence.CascadeType.ALL)
-	private List<Produto> produto = new ArrayList<Produto>();
+	private List<Produto> produtos;
 
 	/**
-	 * E um cliente esta associado a um ou mais pedidos.
+	 * E varios pedidos pode pertencer a um ou mais cliente
 	 */
 
-	@OneToMany(mappedBy = "cliente", cascade = javax.persistence.CascadeType.ALL)	
-	private List<Cliente> clientePedido;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cliente_id")
+	private Cliente pedidoCliente;
 
 	public Pedido() {
-		
+
 	}
-	
-	public Pedido(String descricao, Calendar data) {
+	public Pedido(String descricao, Calendar data, List<Produto> produtos, Cliente pedidoCliente) {
 		super();
+
 		this.descricao = descricao;
 		this.data = data;
+		this.produtos = produtos;
+		this.pedidoCliente = pedidoCliente;
+	}
+	public Long getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	public Calendar getData() {
+		return data;
+	}
+	public void setData(Calendar data) {
+		this.data = data;
+	}
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+	public Cliente getPedidoCliente() {
+		return pedidoCliente;
+	}
+	public void setPedidoCliente(Cliente pedidoCliente) {
+		this.pedidoCliente = pedidoCliente;
 	}
 
-	public Pedido(String descricao, GregorianCalendar data, List<Produto> produto, List<Cliente> cliente) {
-		super();
-		this.descricao = descricao;
-		this.data = data;
-		this.produto = produto;
-		this.clientePedido = cliente;
-	}
-	
+
 
 }

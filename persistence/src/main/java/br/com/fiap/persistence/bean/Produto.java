@@ -13,10 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Um produto pode aparecer em um ou mais pedidos.
  * 
@@ -26,17 +22,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "T_PRODUTO")
 @SequenceGenerator(name = "produto", allocationSize = 1, sequenceName = "SQ_PRODUTO")
-@Getter
-@Setter
-@AllArgsConstructor
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 8126784570860373046L;
 
 	@Id
 	@Column(name = "cd_produto")
-	@GeneratedValue(generator = "produto", strategy = GenerationType.AUTO)
-	private Integer codigo;
+	@GeneratedValue(generator = "produto", strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
 	@Column(name = "nm_produto", nullable = false, length = 100)
 	private String nome;
@@ -50,12 +43,14 @@ public class Produto implements Serializable {
 	/**
 	 * noemanto da coluna que possui a chave-estrangeira requerida pela associação
 	 * 
+	 * Um produto pode aparecer em um ou mais pedidos. 
+	 * 
 	 * @author lucasrodriguesdonascimento
 	 */
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade =  CascadeType.ALL)
 	@JoinColumn(name = "pedido")
 	private Pedido pedido;
-
+	
 	public Produto() {
 		
 	}
@@ -67,11 +62,50 @@ public class Produto implements Serializable {
 
 	}
 	
-	
 	public Produto(String nome, Integer quantidade, Double valor, Pedido pedido) {
 		this.nome = nome;
 		this.quantidade = quantidade;
 		this.valor = valor;
+		this.pedido = pedido;
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
 

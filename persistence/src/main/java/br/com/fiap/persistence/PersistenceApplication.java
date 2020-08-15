@@ -1,7 +1,6 @@
 package br.com.fiap.persistence;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -28,51 +27,41 @@ import br.com.fiap.persistence.service.ProdutoService;
 @EnableJpaRepositories("br.com.fiap")
 @ComponentScan("br.com.fiap")
 public class PersistenceApplication implements CommandLineRunner{
-	
+
 	@Autowired
 	private ProdutoService produtoService;
-	
+
 	@Autowired
 	private PedidoService pedidoService;
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
-    private static final Logger log = LoggerFactory.getLogger(PersistenceApplication.class);
-    
+
+	private static final Logger log = LoggerFactory.getLogger(PersistenceApplication.class);
+
 	public static void main(String[] args) {
 		SpringApplication.run(PersistenceApplication.class, args);
 	}
-	
+
 	@Override
 	public void run(String... args) throws Exception {
-	
-		log.info("StartApplication...");
+
 		
-		Pedido pedido = null;
-		Cliente cliente = null;
-		ArrayList<Produto> listaProduto = new ArrayList<Produto>();
+		List<Produto> prodList = new ArrayList<Produto>();
 		
-		Produto produto1  = new Produto("Mouse Razer" , 1 , 300.5);
-		Produto produto2  = new Produto("Mouse Steelseries" , 1 , 600.5);
 		
-		listaProduto.add(produto1);
-		listaProduto.add(produto2);
+		Cliente c = new Cliente("Lucas", new Endereco("Rua X", "230"));
+		Produto prod = new Produto("Moudr", 1, 200.0);
+		Produto prod2 = new Produto("DSA", 1, 200.0);
+		prodList.add(prod);
+		prodList.add(prod2);
 		
-		//2 -  Cada pedido possui um ou mais produtos e um cliente associado a
-		//esse pedido. 
+		Pedido p = new Pedido("Pedido 1000", new GregorianCalendar(2020 , Calendar.FEBRUARY , 20), 
+				prodList, 
+				c);
 		
-		// Um produto pode aparecer em um ou mais pedidos. 
-	
-		cliente = new Cliente("Lucas", new Endereco("Rua X","230"));
-		
-		pedido = new Pedido("Produtos Razer", new GregorianCalendar(2020 , Calendar.FEBRUARY , 20), listaProduto, Arrays.asList(cliente));
-		pedido = new Pedido("Produtos Logitech", new GregorianCalendar(2020 , Calendar.FEBRUARY , 20), listaProduto, Arrays.asList(cliente));
-		
-		pedidoService.add(pedido);
+		pedidoService.add(p);
 		
 	}
-
-
 
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.fiap.persistence.bean.Portal;
 
 @Repository
-public interface PortalRepository extends JpaRepository<Portal, Integer>{
+public interface PortalRepository extends JpaRepository<Portal, Long>{
 
 }
