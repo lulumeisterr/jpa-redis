@@ -1,6 +1,7 @@
 package br.com.fiap.persistence.services;
 
 import br.com.fiap.persistence.models.Cliente;
+import br.com.fiap.persistence.models.Produto;
 import br.com.fiap.persistence.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -10,6 +11,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,19 +26,23 @@ public class ClienteService {
             put= { @CachePut(value= "cliente", key= "#cliente.codigo") },
             evict = { @CacheEvict(value= "allClientes", allEntries= true) }
     )
-    public Cliente add(Cliente cliente) {
-    	return clienteRepository.save(cliente);
-    }
+    public Cliente add(Cliente cliente) { return clienteRepository.save(cliente); }
 
     @Cacheable(value= "allClientes", unless= "#result.size() == 0")
-    public List<Cliente> findAll() {
-        return clienteRepository.findAll();
+    public List<Cliente> findAll() { return clienteRepository.findAll(); }
+
+    @Transactional
+    @CacheEvict(value= "allClientes", allEntries= true)
+    public void addAll(Collection<Cliente> clientes) {
+        for (Cliente cliente : clientes) {
+            clienteRepository.save(cliente);
+        }
     }
 
-    @Caching(
-            put= { @CachePut(value= "cliente", key= "#cliente.codigo") },
-            evict = { @CacheEvict(value= "allClientes", allEntries= true) }
-    )
+    @Caching(evict= {
+        @CacheEvict(value= "cliente", key= "#codigo"),
+        @CacheEvict(value= "allClientes", allEntries= true)
+    })
     public void delete(long id){
         clienteRepository.deleteById(id);
     }
@@ -46,23 +52,8 @@ public class ClienteService {
         clienteRepository.deleteAll();
     }
 
-    @Caching(
-            evict= {
-                    @CacheEvict(value= "cliente", key= "#codigo"),
-                    @CacheEvict(value= "allClientes", allEntries= true)
-            }
-    )
-    public void deleteCliente(long codigo) {
-        clienteRepository.deleteById(codigo);
-    }
-
     @Cacheable(value= "cliente", key = "#codigo")
     public Optional<Cliente> findById(Long codigo){
-        return clienteRepository.findById(codigo);
-    }
-
-    @Cacheable("outro-cliente")
-    public Optional<Cliente> findByIdCached(Long codigo){
         return clienteRepository.findById(codigo);
     }
 

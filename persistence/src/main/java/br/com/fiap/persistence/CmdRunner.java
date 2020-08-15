@@ -53,8 +53,6 @@ public class CmdRunner implements CommandLineRunner {
         Cliente gab= clienteService.add(new Cliente("Gabriel", new Endereco("Rua Z", "3030")));
         clienteService.findById(gab.getCodigo()).ifPresent(a->System.out.println(a));
         clienteService.findById(gab.getCodigo()).ifPresent(a->System.out.println(a));
-        clienteService.findByIdCached(gab.getCodigo()).ifPresent(a->System.out.println(a));
-        clienteService.findByIdCached(gab.getCodigo()).ifPresent(a->System.out.println(a));
 
     }
 
