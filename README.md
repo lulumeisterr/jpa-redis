@@ -14,8 +14,8 @@
  # Importante para devs do grupo
  
  - Remover a implementacao CommandLineRunner no metodo main 
- - Criar um schema com o nome ˜persistence˜ no banco local
- - Altear usuario e senha no application.properties
+ - Criar um schema com o nome "persistence" no banco local
+ - Alterar usuario e senha no application.properties
  
  
  # Lembrar
