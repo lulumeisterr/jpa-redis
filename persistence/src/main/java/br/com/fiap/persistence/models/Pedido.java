@@ -16,6 +16,11 @@ import java.util.List;
 @SequenceGenerator(name = "pedido", sequenceName = "SQ_T_PEDIDO", allocationSize = 1)
 public class Pedido implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5878776286902632548L;
+
 	@Id
 	@GeneratedValue(generator = "pedido", strategy = GenerationType.IDENTITY)
 	@Column(name = "cd_pedido")

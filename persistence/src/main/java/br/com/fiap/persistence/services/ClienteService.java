@@ -25,7 +25,9 @@ public class ClienteService {
             put= { @CachePut(value= "cliente", key= "#cliente.codigo") },
             evict = { @CacheEvict(value= "allClientes", allEntries= true) }
     )
-    public Cliente add(Cliente cliente) { return clienteRepository.save(cliente); }
+    public Cliente add(Cliente cliente) { 
+    	return clienteRepository.save(cliente); 
+    	}
 
     @Cacheable(value= "allClientes", unless= "#result.size() == 0")
     public List<Cliente> findAll() { return clienteRepository.findAll(); }
@@ -39,11 +41,11 @@ public class ClienteService {
     }
 
     @Caching(evict= {
-        @CacheEvict(value= "cliente", key= "#codigo"),
-        @CacheEvict(value= "allClientes", allEntries= true)
-    })
-    public void delete(long id){
-        clienteRepository.deleteById(id);
+            @CacheEvict(value= "cliente", key= "#codigo"),
+            @CacheEvict(value= "allClientes", allEntries= true)
+        })
+    public void deleteById(Long codigo) {
+    	clienteRepository.deleteById(codigo);
     }
 
     @CacheEvict(value= "cliente", allEntries= true)

@@ -16,6 +16,11 @@ import java.io.Serializable;
 @Embeddable
 public class Endereco implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6076614977406380121L;
+
 	@Column(name = "nm_logradouro", nullable = false)
 	private String logradouro;
 
