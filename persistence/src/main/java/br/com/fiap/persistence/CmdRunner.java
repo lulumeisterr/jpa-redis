@@ -38,7 +38,9 @@ public class CmdRunner implements CommandLineRunner {
 
         clienteService.deleteAll();
 
-        clienteService.add(new Cliente("Gabriel", new Endereco("Rua Z", "3030")));
+        Cliente gab= clienteService.add(new Cliente("Gabriel", new Endereco("Rua Z", "3030")));
+
+        clienteService.findById(gab.getCodigo());
 
         List<Produto> prodList = new ArrayList<Produto>();
 

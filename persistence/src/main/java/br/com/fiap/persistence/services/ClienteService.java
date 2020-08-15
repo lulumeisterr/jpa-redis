@@ -20,6 +20,8 @@ public class ClienteService {
     @Transactional
     public void add(Cliente cliente) {
     	clienteRepository.save(cliente);
+    public Cliente add(Cliente cliente) {
+    	return clienteRepository.save(cliente);
     }
 
     public List<Cliente> findAll() {
