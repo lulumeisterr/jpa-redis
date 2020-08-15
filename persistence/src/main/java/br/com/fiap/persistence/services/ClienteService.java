@@ -29,7 +29,8 @@ public class ClienteService {
     public void deleteAll(){
         clienteRepository.deleteAll();
     }
-    public Optional<Cliente> findById(Long clienteId){
-        return clienteRepository.findById(clienteId);
+    
     public Optional<Cliente> findById(Long codigo){
         return clienteRepository.findById(codigo);
+    }
+}

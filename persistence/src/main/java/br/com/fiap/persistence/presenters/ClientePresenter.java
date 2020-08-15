@@ -5,7 +5,7 @@ import br.com.fiap.persistence.models.Cliente;
 import java.io.Serializable;
 
 public class ClientePresenter implements Serializable {
-    private Integer id;
+    private Long id;
     private String nome;
     private EnderecoPresenter endereco;
 
@@ -17,7 +17,7 @@ public class ClientePresenter implements Serializable {
         this.endereco = new EnderecoPresenter(cliente.getEndereco());
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

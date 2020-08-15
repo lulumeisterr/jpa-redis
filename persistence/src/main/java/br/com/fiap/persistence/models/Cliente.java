@@ -23,7 +23,7 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(generator = "cliente", strategy = GenerationType.IDENTITY)
 	@Column(name = "cd_cliente")
-	private Integer codigo;
+	private Long codigo;
 
 	@Column(name = "nm_cliente", nullable = false, length = 255)
 	private String nome;
@@ -57,12 +57,12 @@ public class Cliente implements Serializable {
 	}
 
 
-	public Integer getCodigo() {
+	public Long getCodigo() {
 		return codigo;
 	}
 
 
-	public void setCodigo(Integer codigo) {
+	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
 
