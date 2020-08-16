@@ -33,6 +33,31 @@ Para iniciar o projeto usando maven rode o seguinte comando depois de subir banc
 Swagger -> http://localhost:8080/swagger-ui.html
 adminer -> http://localhost:8081/
 
+
+# Exemplo de Requisicao
+
+ POST : localhost:8080/clientes/cliente
+  
+      {
+          "nome": "Maria",
+          "endereco": {
+              "logradouro": "Rua Z",
+              "numero": "10"
+          },
+          "pedido": [
+              {
+                  "descricao": "Primeiro pedido",
+                  "data": "2020-08-20T05:47:08.644",
+                  "produtos": [
+                      {
+                          "nome": "Mouse Razer",
+                          "quantidade":2,
+                          "valor": 10.0
+                      }
+                  ]
+              }
+          ]
+       }
  
 # Regras
 
