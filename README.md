@@ -20,6 +20,7 @@ Entre no http://localhost:8081/
 - Password : Se encontra no application.properties
 
 Host - http://localhost:8081/?server=db&username=root&db=&schema=
+ Cliente em Create Database
  crie um schema "persistence" Ou Use suas configuracoes locais
  
 ### O Projeto
