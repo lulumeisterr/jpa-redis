@@ -12,10 +12,17 @@ public class EnderecoPresenter implements Serializable {
     private String logradouro;
     private String numero;
 
-
     public EnderecoPresenter(Endereco endereco) {
         this.logradouro = endereco.getLogradouro();
         this.numero = endereco.getNumero();
+    }
+
+    public Endereco toModel(){
+        Endereco endereco = new Endereco(){{
+            setLogradouro(this.getLogradouro());
+            setNumero(this.getNumero());
+        }};
+        return endereco;
     }
 
 }

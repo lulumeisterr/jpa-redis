@@ -31,12 +31,7 @@ public class PedidoService {
             evict = { @CacheEvict(value= "allPedidos", allEntries= true) }
     )
     public void add(PedidoPresenter pedido) {
-    	Pedido pedidoBase = new Pedido();
-		pedidoBase.setCodigo(pedido.getCodigo());
-		pedidoBase.setDescricao(pedido.getDescricao());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		LocalDateTime dateTime = LocalDateTime.parse(pedido.getData(), formatter);
-		pedidoBase.setData(dateTime);
+    	Pedido pedidoBase = pedido.toModel();
     	pedidoRepository.save(pedidoBase);
     }
 
@@ -48,15 +43,7 @@ public class PedidoService {
     @Transactional
     @CacheEvict(value= "allPedidos", allEntries= true)
     public void addAll(Collection<PedidoPresenter> pedidos) {
-        for (PedidoPresenter pedido : pedidos) {
-        	Pedido pedidoBase = new Pedido();
-    		pedidoBase.setCodigo(pedido.getCodigo());
-    		pedidoBase.setDescricao(pedido.getDescricao());
-    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-    		LocalDateTime dateTime = LocalDateTime.parse(pedido.getData(), formatter);
-    		pedidoBase.setData(dateTime);
-        	pedidoRepository.save(pedidoBase);
-        }
+        pedidos.stream().map(PedidoPresenter::toModel).forEach(pedidoRepository::save);
     }
     
     @Cacheable(value= "pedido", key = "#codigo")
@@ -65,15 +52,11 @@ public class PedidoService {
     }
     
     @Caching(evict= {
-            @CacheEvict(value= "pedido", key= "#codigo"),
-            @CacheEvict(value= "allPedidos", allEntries= true)
-        })
+        @CacheEvict(value= "pedido", key= "#codigo"),
+        @CacheEvict(value= "allPedidos", allEntries= true)
+    })
     public void deleteById(Long codigo) {
     	pedidoRepository.deleteById(codigo);
     }
-    
-    
-    
-    
-	
+
 }

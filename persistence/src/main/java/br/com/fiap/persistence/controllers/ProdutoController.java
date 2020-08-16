@@ -21,6 +21,8 @@ import br.com.fiap.persistence.models.Produto;
 import br.com.fiap.persistence.presenters.ProdutoPresenter;
 import br.com.fiap.persistence.services.ProdutoService;
 
+import static java.util.stream.Collectors.toList;
+
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
@@ -29,17 +31,17 @@ public class ProdutoController {
 	ProdutoService produtoService;
 
 	@PostMapping("/produto")
-	public ResponseEntity<Void> addProduto(@RequestBody Produto produto, UriComponentsBuilder builder) {
-		Produto savedProduto = produtoService.add(produto);  
+	public ResponseEntity<Void> addProduto(@RequestBody ProdutoPresenter produto, UriComponentsBuilder builder) {
+		Produto savedProduto = produtoService.add(produto.toModel());
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(builder.path("/produto/{id}").buildAndExpand(savedProduto.getCodigo()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/listarProduto")
-	public ResponseEntity<List<Produto>> getAllProdutos() {
-		List<Produto> lista = produtoService.findAll();
-		return new ResponseEntity<List<Produto>>(lista, HttpStatus.OK);
+	@GetMapping()
+	public ResponseEntity<List<ProdutoPresenter>> getAllProdutos() {
+		List<ProdutoPresenter> lista = produtoService.findAll().stream().map(ProdutoPresenter::new).collect(toList());
+		return new ResponseEntity<List<ProdutoPresenter>>(lista, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{codigo}")
@@ -47,7 +49,7 @@ public class ProdutoController {
 		Optional<Produto> produto = produtoService.findById(codigo);
 		if(produto.isPresent()) {
 			return ResponseEntity.ok(new ProdutoPresenter(produto.get()));
-		}else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -58,9 +60,9 @@ public class ProdutoController {
 	}
 	
 	@PutMapping("/produto")
-	public ResponseEntity<Produto> updateProduto(@RequestBody Produto produto) {
-		produtoService.update(produto);
-		return new ResponseEntity<Produto>(produto, HttpStatus.OK);
+	public ResponseEntity<ProdutoPresenter> updateProduto(@RequestBody ProdutoPresenter produto) {
+		ProdutoPresenter p = new ProdutoPresenter( produtoService.update(produto.toModel()) );
+		return new ResponseEntity<ProdutoPresenter>(p, HttpStatus.OK);
 	}
 
 }

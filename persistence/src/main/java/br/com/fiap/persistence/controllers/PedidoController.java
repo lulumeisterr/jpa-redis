@@ -57,11 +57,5 @@ public class PedidoController {
 	public void deleteById(@PathVariable Long codigo) {
 		pedidoService.deleteById(codigo);
 	}
-	
-	
-	
-	
-	
-	
 
 }

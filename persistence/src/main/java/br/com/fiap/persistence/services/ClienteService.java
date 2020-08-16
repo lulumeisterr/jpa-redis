@@ -65,9 +65,9 @@ public class ClienteService{
 	}
 
 	@Caching(
-			put= { @CachePut(value= "cliente", key= "#cliente.codigo") },
-			evict= { @CacheEvict(value= "allClientes", allEntries= true) }
-			)
+		put= { @CachePut(value= "cliente", key= "#cliente.codigo") },
+		evict= { @CacheEvict(value= "allClientes", allEntries= true) }
+	)
 	public Cliente update(final Cliente cliente) {
 		if(cliente.getCodigo() == null) {
 			throw new EntityNotFoundException("Nao encontrado");
@@ -75,7 +75,4 @@ public class ClienteService{
 		return clienteRepository.save(cliente);
 	}
 	
-	 public static long getProximaMatricula() {
-	        return ID++;
-	    }
 }
