@@ -1,25 +1,19 @@
 package br.com.fiap.persistence.controllers;
 
-import java.util.List;
-import java.util.Optional;
-
+import br.com.fiap.persistence.models.Cliente;
+import br.com.fiap.persistence.presenters.ClientePresenter;
+import br.com.fiap.persistence.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.fiap.persistence.models.Cliente;
-import br.com.fiap.persistence.presenters.ClientePresenter;
-import br.com.fiap.persistence.services.ClienteService;
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping(value = "/clientes")
@@ -28,19 +22,10 @@ public class ClientesController {
 	@Autowired
 	ClienteService clienteService;
 
-	@PostMapping("/cliente")
-	public ResponseEntity<Void> addCliente(@RequestBody Cliente cliente, UriComponentsBuilder builder) {
-	
-		Cliente savedProduto = clienteService.add(cliente);  
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/clientes/{id}").buildAndExpand(savedProduto.getCodigo()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-	}
-
-	@GetMapping("/listar")
-	public ResponseEntity<List<Cliente>> getAllProdutos() {
-		List<Cliente> lista = clienteService.findAll();
-		return new ResponseEntity<List<Cliente>>(lista, HttpStatus.OK);
+	@GetMapping()
+	public ResponseEntity<List<ClientePresenter>> getAll() {
+		List<ClientePresenter> lista = clienteService.findAll().stream().map(ClientePresenter::new).collect(toList());
+		return new ResponseEntity<List<ClientePresenter>>(lista, HttpStatus.OK);
 	}
 
 	@GetMapping("/{codigo}")
@@ -51,11 +36,20 @@ public class ClientesController {
 		else
 			return ResponseEntity.notFound().build();
 	}
-	
-	@PutMapping("/cliente")
-	public ResponseEntity<Cliente> updateProduto(@RequestBody Cliente cliente) {
-		clienteService.update(cliente);
-		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+
+	@PostMapping()
+	public ResponseEntity<ClientePresenter> add(@RequestBody ClientePresenter cliente, UriComponentsBuilder builder) {
+		cliente.setCodigo(null);
+		Cliente savedProduto = clienteService.add(cliente.toModel());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(builder.path("/clientes/{id}").buildAndExpand(savedProduto.getCodigo()).toUri());
+		return new ResponseEntity<ClientePresenter>(new ClientePresenter(savedProduto), headers, HttpStatus.CREATED);
+	}
+
+	@PutMapping()
+	public ResponseEntity<ClientePresenter> update(@RequestBody ClientePresenter cliente) {
+		ClientePresenter c = new ClientePresenter(clienteService.update(cliente.toModel()));
+		return new ResponseEntity<ClientePresenter>(c, HttpStatus.OK);
 	}
 		
 	@DeleteMapping("/{codigo}")

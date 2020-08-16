@@ -6,8 +6,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
+import br.com.fiap.persistence.models.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.cache.annotation.CacheEvict;
@@ -30,14 +32,8 @@ public class PedidoService {
             put= { @CachePut(value= "pedidoBase", key= "#pedidoBase.codigo") },
             evict = { @CacheEvict(value= "allPedidos", allEntries= true) }
     )
-    public void add(PedidoPresenter pedido) {
-    	Pedido pedidoBase = new Pedido();
-		pedidoBase.setCodigo(pedido.getCodigo());
-		pedidoBase.setDescricao(pedido.getDescricao());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		LocalDateTime dateTime = LocalDateTime.parse(pedido.getData(), formatter);
-		pedidoBase.setData(dateTime);
-    	pedidoRepository.save(pedidoBase);
+    public void add(Pedido pedido) {
+    	pedidoRepository.save(pedido);
     }
 
     @Cacheable(value= "allPedidos", unless= "#result.size() == 0")
@@ -48,15 +44,7 @@ public class PedidoService {
     @Transactional
     @CacheEvict(value= "allPedidos", allEntries= true)
     public void addAll(Collection<PedidoPresenter> pedidos) {
-        for (PedidoPresenter pedido : pedidos) {
-        	Pedido pedidoBase = new Pedido();
-    		pedidoBase.setCodigo(pedido.getCodigo());
-    		pedidoBase.setDescricao(pedido.getDescricao());
-    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-    		LocalDateTime dateTime = LocalDateTime.parse(pedido.getData(), formatter);
-    		pedidoBase.setData(dateTime);
-        	pedidoRepository.save(pedidoBase);
-        }
+        pedidos.stream().map(PedidoPresenter::toModel).forEach(pedidoRepository::save);
     }
     
     @Cacheable(value= "pedido", key = "#codigo")
@@ -65,15 +53,11 @@ public class PedidoService {
     }
     
     @Caching(evict= {
-            @CacheEvict(value= "pedido", key= "#codigo"),
-            @CacheEvict(value= "allPedidos", allEntries= true)
-        })
+        @CacheEvict(value= "pedido", key= "#codigo"),
+        @CacheEvict(value= "allPedidos", allEntries= true)
+    })
     public void deleteById(Long codigo) {
     	pedidoRepository.deleteById(codigo);
     }
-    
-    
-    
-    
-	
+
 }

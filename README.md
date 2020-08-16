@@ -36,29 +36,31 @@ adminer -> http://localhost:8081/
 
 # Exemplo de Requisicao
 
+Esta request irá criar um cliente, um pedido e um produto.
+
  POST : localhost:8080/clientes/cliente
-  
-      {
-          "nome": "Maria",
-          "endereco": {
-              "logradouro": "Rua Z",
-              "numero": "10"
-          },
-          "pedido": [
-              {
-                  "descricao": "Primeiro pedido",
-                  "data": "2020-08-20T05:47:08.644",
-                  "produtos": [
-                      {
-                          "nome": "Mouse Razer",
-                          "quantidade":2,
-                          "valor": 10.0
-                      }
-                  ]
-              }
-          ]
-       }
  
+            {
+                "nome": "Maria",
+                "endereco": {
+                    "logradouro": "Rua Z",
+                    "numero": "10"
+                },
+                "pedidos": [
+                    {
+                        "descricao": "Primeiro pedido",
+                        "data": "2020-08-20T05:47:08.644",
+                        "produtos": [
+                            {
+                                "nome": "Mouse Razer",
+                                "quantidade":2,
+                                "valor": 10.0
+                            }
+                        ]
+                    }
+                ]
+            }
+            
 # Regras
 
  - O portal possui vários produtos em estoque e com uma determinada quantidade em estoque de cada um desses produtos.

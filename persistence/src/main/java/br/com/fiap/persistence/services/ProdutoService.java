@@ -72,14 +72,14 @@ public class ProdutoService {
     }
     
     @Caching(
-    		put= { @CachePut(value= "produto", key= "#produto.codigo") },
-    		evict= { @CacheEvict(value= "allProdutos", allEntries= true) }
-    	)
-        public Produto update(final Produto produto) {
-            if(produto.getCodigo() == null) {
-                throw new EntityNotFoundException("Nao encontrado");
-            }
-            return produtoRepository.save(produto);
+        put= { @CachePut(value= "produto", key= "#produto.codigo") },
+        evict= { @CacheEvict(value= "allProdutos", allEntries= true) }
+    )
+    public Produto update(final Produto produto) {
+        if(produto.getCodigo() == null) {
+            throw new EntityNotFoundException("Nao encontrado");
         }
+        return produtoRepository.save(produto);
+    }
 
 }

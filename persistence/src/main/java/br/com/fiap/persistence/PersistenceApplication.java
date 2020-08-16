@@ -1,6 +1,7 @@
 package br.com.fiap.persistence;
 
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
+import com.google.common.base.Predicates;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,8 @@ public class PersistenceApplication  {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
+                .paths(Predicates.not(PathSelectors.regex("/error")))
+                .paths(Predicates.not(PathSelectors.regex("/actuator.*")))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(new ApiInfo(
@@ -39,7 +42,7 @@ public class PersistenceApplication  {
                         "Mysql Data using cache Redis.",
                         "1.0",
                         "Terms of service",
-                        new Contact("GLA", "www.fiap.com.br", ""),
+                        new Contact("GaLuAl", "www.fiap.com.br", ""),
                         "License of API", "API license URL", Collections.emptyList())
                 );
     }

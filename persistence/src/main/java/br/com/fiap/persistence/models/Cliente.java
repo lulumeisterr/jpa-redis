@@ -35,7 +35,7 @@ public class Cliente implements Serializable {
 	 * Um cliente esta associado um ou varios pedidos
 	 */
 	@OneToMany(mappedBy = "pedidoCliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Pedido> pedido;
+	private List<Pedido> pedidos;
 
 	public Cliente(String nome, Endereco endereco) {
 		super();
@@ -52,11 +52,11 @@ public class Cliente implements Serializable {
 				'}';
 	}
 
-	public Cliente(String nome, Endereco endereco, List<Pedido> pedido) {
+	public Cliente(String nome, Endereco endereco, List<Pedido> pedidos) {
 		super();
 		this.nome = nome;
 		this.endereco = endereco;
-		this.pedido = pedido;
+		this.pedidos = pedidos;
 	}
 
 	public Cliente() {
@@ -94,13 +94,13 @@ public class Cliente implements Serializable {
 	}
 
 
-	public List<Pedido> getPedido() {
-		return pedido;
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
 
-	public void setPedido(List<Pedido> pedido) {
-		this.pedido = pedido;
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 	
 	
