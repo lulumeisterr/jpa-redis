@@ -16,16 +16,12 @@ Subindo a base do projeto, estando na raiz no projeto, execute:
 
 Após subir o banco na primeira vez, será necessário criar a database `persistence`
 Entre no http://localhost:8081/ 
-UserName : root
-Passwor : application.properties
+- UserName : root
+- Password : Se encontra no application.properties
 
-http://localhost:8081/?server=db&username=root&db=&schema=
-
-e crie um schema "persistence"
-
-Ou Use suas configuracoes locais
-
-    
+Host - http://localhost:8081/?server=db&username=root&db=&schema=
+ crie um schema "persistence" Ou Use suas configuracoes locais
+ 
 ### O Projeto
 O projeto é exposto na porta `8080`.
 Para iniciar o projeto usando maven rode o seguinte comando depois de subir banco e redis.
