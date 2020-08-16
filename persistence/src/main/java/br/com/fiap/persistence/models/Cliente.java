@@ -34,7 +34,7 @@ public class Cliente implements Serializable {
 	/**
 	 * Um cliente esta associado um ou varios pedidos
 	 */
-	@OneToMany(mappedBy = "pedidoCliente", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pedidoCliente", cascade = CascadeType.ALL)
 	private List<Pedido> pedido;
 
 	public Cliente(String nome, Endereco endereco) {

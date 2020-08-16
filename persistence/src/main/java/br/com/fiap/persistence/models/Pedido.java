@@ -39,7 +39,7 @@ public class Pedido implements Serializable {
 	 * orphanRemoval -> Se voce deletar um Pedido ele vai deletar os produtos
 	 * Cascade -> Vai realizar a acao para todo o relacionamento
 	 */
-	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY, targetEntity = Produto.class, orphanRemoval = false, cascade = CascadeType.REFRESH)
+	@OneToMany(mappedBy = "pedido",  targetEntity = Produto.class, orphanRemoval = false, cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
 	private List<Produto> produtos;
 
 	/**
