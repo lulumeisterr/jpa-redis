@@ -16,12 +16,13 @@ Subindo a base do projeto, estando na raiz no projeto, execute:
 
 Após subir o banco na primeira vez, será necessário criar a database `persistence`
 Entre no http://localhost:8081/ 
-- UserName : root
-- Password : Se encontra no application.properties
 
-Host - http://localhost:8081/?server=db&username=root&db=&schema=
- Cliente em Create Database
- crie um schema "persistence" Ou Use suas configuracoes locais
+     - UserName : root
+     - Password : Se encontra no application.properties
+
+    Host - http://localhost:8081/?server=db&username=root&db=&schema=
+     - Clique em Create Database
+     - crie um schema "persistence" Ou Use suas configuracoes locais
  
 ### O Projeto
 O projeto é exposto na porta `8080`.
