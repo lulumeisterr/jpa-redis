@@ -1,6 +1,6 @@
 # Persistencia-JPA-REDIS
 
- Spring Data JPA + Cache Redis (os dois em um único projeto). 
+ Spring Data JPA + Cache Redis 
  
 ## Rodando o projeto
 
