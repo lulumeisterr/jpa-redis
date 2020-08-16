@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,8 @@ public class ClientesController {
 	ClienteService clienteService;
 
 	@PostMapping("/cliente")
-	public ResponseEntity<Void> addProduto(@RequestBody Cliente cliente, UriComponentsBuilder builder) {
+	public ResponseEntity<Void> addCliente(@RequestBody Cliente cliente, UriComponentsBuilder builder) {
+	
 		Cliente savedProduto = clienteService.add(cliente);  
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(builder.path("/clientes/{id}").buildAndExpand(savedProduto.getCodigo()).toUri());
@@ -50,6 +52,12 @@ public class ClientesController {
 			return ResponseEntity.notFound().build();
 	}
 	
+	@PutMapping("/cliente")
+	public ResponseEntity<Cliente> updateProduto(@RequestBody Cliente cliente) {
+		clienteService.update(cliente);
+		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+	}
+		
 	@DeleteMapping("/{codigo}")
 	public void deleteById(@PathVariable Long codigo) {
 		clienteService.deleteById(codigo);

@@ -2,9 +2,9 @@ package br.com.fiap.persistence.models;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,8 +47,8 @@ public class Produto implements Serializable {
 	 * 
 	 * @author lucasrodriguesdonascimento
 	 */
-	@ManyToOne(cascade =  CascadeType.ALL)
-	@JoinColumn(name = "pedido")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cd_pedido")
 	private Pedido pedido;
 	
 	public Produto() {

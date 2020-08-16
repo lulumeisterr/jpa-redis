@@ -39,15 +39,15 @@ public class Pedido implements Serializable {
 	 * orphanRemoval -> Se voce deletar um Pedido ele vai deletar os produtos
 	 * Cascade -> Vai realizar a acao para todo o relacionamento
 	 */
-	@OneToMany(mappedBy = "pedido",  targetEntity = Produto.class, orphanRemoval = false, cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pedido",  targetEntity = Produto.class, orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Produto> produtos;
 
 	/**
 	 * E varios pedidos pode pertencer a um ou mais cliente
 	 */
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "cliente_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cd_cliente")
 	private Cliente pedidoCliente;
 
 	public Pedido() {

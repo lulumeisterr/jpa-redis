@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +70,16 @@ public class ProdutoService {
     public Optional<Produto> findById(Long codigo){
         return produtoRepository.findById(codigo);
     }
+    
+    @Caching(
+    		put= { @CachePut(value= "produto", key= "#produto.codigo") },
+    		evict= { @CacheEvict(value= "allProdutos", allEntries= true) }
+    	)
+        public Produto update(final Produto produto) {
+            if(produto.getCodigo() == null) {
+                throw new EntityNotFoundException("Nao encontrado");
+            }
+            return produtoRepository.save(produto);
+        }
 
 }
