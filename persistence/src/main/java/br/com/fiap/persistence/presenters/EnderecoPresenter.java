@@ -3,10 +3,12 @@ package br.com.fiap.persistence.presenters;
 import br.com.fiap.persistence.models.Endereco;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class EnderecoPresenter implements Serializable {
     private String logradouro;
@@ -18,10 +20,9 @@ public class EnderecoPresenter implements Serializable {
     }
 
     public Endereco toModel(){
-        Endereco endereco = new Endereco(){{
-            setLogradouro(this.getLogradouro());
-            setNumero(this.getNumero());
-        }};
+        Endereco endereco = new Endereco();
+        endereco.setLogradouro(this.getLogradouro());
+        endereco.setNumero(this.getNumero());
         return endereco;
     }
 

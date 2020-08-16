@@ -30,16 +30,8 @@ public class ProdutoController {
 	@Autowired
 	ProdutoService produtoService;
 
-	@PostMapping("/produto")
-	public ResponseEntity<Void> addProduto(@RequestBody ProdutoPresenter produto, UriComponentsBuilder builder) {
-		Produto savedProduto = produtoService.add(produto.toModel());
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/produto/{id}").buildAndExpand(savedProduto.getCodigo()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-	}
-
 	@GetMapping()
-	public ResponseEntity<List<ProdutoPresenter>> getAllProdutos() {
+	public ResponseEntity<List<ProdutoPresenter>> getAll() {
 		List<ProdutoPresenter> lista = produtoService.findAll().stream().map(ProdutoPresenter::new).collect(toList());
 		return new ResponseEntity<List<ProdutoPresenter>>(lista, HttpStatus.OK);
 	}
@@ -58,9 +50,18 @@ public class ProdutoController {
 	public void deleteById(@PathVariable Long codigo) {
 		produtoService.deleteById(codigo);
 	}
-	
-	@PutMapping("/produto")
-	public ResponseEntity<ProdutoPresenter> updateProduto(@RequestBody ProdutoPresenter produto) {
+
+	@PostMapping()
+	public ResponseEntity<ProdutoPresenter> add(@RequestBody ProdutoPresenter produto, UriComponentsBuilder builder) {
+		produto.setCodigo(null);
+		Produto savedProduto = produtoService.add(produto.toModel());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(builder.path("/produto/{id}").buildAndExpand(savedProduto.getCodigo()).toUri());
+		return new ResponseEntity<ProdutoPresenter>(new ProdutoPresenter(savedProduto), headers, HttpStatus.CREATED);
+	}
+
+	@PutMapping()
+	public ResponseEntity<ProdutoPresenter> update(@RequestBody ProdutoPresenter produto) {
 		ProdutoPresenter p = new ProdutoPresenter( produtoService.update(produto.toModel()) );
 		return new ResponseEntity<ProdutoPresenter>(p, HttpStatus.OK);
 	}

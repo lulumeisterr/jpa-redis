@@ -6,8 +6,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
+import br.com.fiap.persistence.models.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.cache.annotation.CacheEvict;
@@ -30,9 +32,8 @@ public class PedidoService {
             put= { @CachePut(value= "pedidoBase", key= "#pedidoBase.codigo") },
             evict = { @CacheEvict(value= "allPedidos", allEntries= true) }
     )
-    public void add(PedidoPresenter pedido) {
-    	Pedido pedidoBase = pedido.toModel();
-    	pedidoRepository.save(pedidoBase);
+    public void add(Pedido pedido) {
+    	pedidoRepository.save(pedido);
     }
 
     @Cacheable(value= "allPedidos", unless= "#result.size() == 0")
