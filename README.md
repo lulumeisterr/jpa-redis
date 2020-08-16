@@ -15,6 +15,11 @@ Subindo a base do projeto, estando na raiz no projeto, execute:
         $ docker-compose up -d
 
 Após subir o banco na primeira vez, será necessário criar a database `persistence`
+Entre no http://localhost:8081/
+UserName : root
+Passwor : application.properties
+
+e crie um schema "persistence"
 
     
 ### O Projeto
